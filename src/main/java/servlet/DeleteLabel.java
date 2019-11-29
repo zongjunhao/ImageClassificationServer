@@ -18,7 +18,7 @@ public class DeleteLabel extends HttpServlet {
         //设置客户端的解码方式为utf-8
         response.setContentType("text/html;charset=utf-8");
 
-        int labelID = Integer.parseInt(request.getParameter("labelID"));
+        int labelID = Integer.parseInt(request.getParameter("labelId"));
 
         boolean success = false;
         try {

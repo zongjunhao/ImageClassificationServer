@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "DeleteImage", urlPatterns = "/image/deleteImage")
 public class DeleteImage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//设置编码方式为utf-8
+        //设置编码方式为utf-8
         response.setCharacterEncoding("UTF-8");
         //设置客户端的解码方式为utf-8
         response.setContentType("text/html;charset=utf-8");

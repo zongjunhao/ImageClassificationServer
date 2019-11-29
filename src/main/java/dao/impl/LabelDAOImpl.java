@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LabelDAOImpl implements LabelDAO {
@@ -20,7 +21,7 @@ public class LabelDAOImpl implements LabelDAO {
 
     @Override
     public List<Label> viewLabels() throws SQLException {
-        List<Label> labels = null;
+        List<Label> labels = new ArrayList<Label>();
         String sql = "select * from label";
         this.pstmt = this.conn.prepareStatement(sql);
         ResultSet rs = this.pstmt.executeQuery();
