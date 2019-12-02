@@ -33,8 +33,8 @@ public class ImageDAOImpl implements ImageDAO {
             image.setLabelId(rs.getInt(2));
             image.setName(rs.getString(3));
             image.setPath(rs.getString(4));
-            image.setAddtime(rs.getTime(5));
-            image.setUpdatetime(rs.getTime(6));
+            image.setAddtime(rs.getTimestamp(5));
+            image.setUpdatetime(rs.getTimestamp(6));
             images.add(image);
         }
         this.pstmt.close();

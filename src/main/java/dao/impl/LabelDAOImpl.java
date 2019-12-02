@@ -30,9 +30,10 @@ public class LabelDAOImpl implements LabelDAO {
             label = new Label();
             label.setId(rs.getInt(1));
             label.setName(rs.getString(2));
-            label.setAddtime(rs.getTime(3));
-            label.setUpdatetime(rs.getTime(4));
+            label.setAddtime(rs.getTimestamp(3));
+            label.setUpdatetime(rs.getTimestamp(4));
             labels.add(label);
+            System.out.println(label);
         }
         this.pstmt.close();
         return labels;

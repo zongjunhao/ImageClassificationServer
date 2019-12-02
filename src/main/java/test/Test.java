@@ -17,7 +17,8 @@ public class Test {
 //        }
 //        boolean flag = DAOFactory.getImageDAOInstance().addImage(1, "testimage", "testpath");
 //        System.out.println(flag);
-        boolean flag = DAOFactory.getImageDAOInstance().deleteImage(4);
-        System.out.println(flag);
+//        boolean flag = DAOFactory.getImageDAOInstance().deleteImage(4);
+//        System.out.println(flag);
+        DAOFactory.getLabelDAOInstance().viewLabels();
     }
 }
