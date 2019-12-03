@@ -14,8 +14,8 @@ public class LabelDAOProxy implements LabelDAO {
     private LabelDAO dao = null;        //接口类
 
     public LabelDAOProxy() throws Exception {
-        this.dbc = new DatabaseConnection();		//实例化DatabaseConnection类
-        this.dao = new LabelDAOImpl(this.dbc.getConnection());	//使用数据库连接初始化DAO实现类
+        this.dbc = new DatabaseConnection();        //实例化DatabaseConnection类
+        this.dao = new LabelDAOImpl(this.dbc.getConnection());    //使用数据库连接初始化DAO实现类
     }
 
     @Override
@@ -23,9 +23,9 @@ public class LabelDAOProxy implements LabelDAO {
         List<Label> labels = null;
         try {
             labels = this.dao.viewLabels();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             this.dbc.close();
         }
         return labels;
@@ -36,9 +36,9 @@ public class LabelDAOProxy implements LabelDAO {
         boolean result = false;
         try {
             result = this.dao.addLabel(name);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             this.dbc.close();
         }
         return result;
@@ -49,11 +49,24 @@ public class LabelDAOProxy implements LabelDAO {
         boolean result = false;
         try {
             result = this.dao.deleteLabel(labelId);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             this.dbc.close();
         }
         return result;
+    }
+
+    @Override
+    public Label findOneLabel(int labelId) throws SQLException {
+        Label label = null;
+        try {
+            label = this.dao.findOneLabel(labelId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.dbc.close();
+        }
+        return label;
     }
 }

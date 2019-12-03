@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.LabelDAO;
+import vo.Admin;
 import vo.Label;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class LabelDAOImpl implements LabelDAO {
         this.pstmt = this.conn.prepareStatement(sql);
         ResultSet rs = this.pstmt.executeQuery();
         Label label = null;
-        while (rs.next()){
+        while (rs.next()) {
             label = new Label();
             label.setId(rs.getInt(1));
             label.setName(rs.getString(2));
@@ -62,5 +63,20 @@ public class LabelDAOImpl implements LabelDAO {
         }
         this.pstmt.close();
         return flag;
+    }
+
+    @Override
+    public Label findOneLabel(int labelId) throws SQLException {
+        Label label = null;
+        String sql = "select l_id, l_name from label where l_id = " + labelId;
+        this.pstmt = this.conn.prepareStatement(sql);
+        ResultSet rs = this.pstmt.executeQuery();
+        if (rs.next()) {
+            label = new Label();
+            label.setId(rs.getInt(1));
+            label.setName(rs.getString(2));
+        }
+        this.pstmt.close();
+        return label;
     }
 }

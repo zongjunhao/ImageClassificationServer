@@ -9,4 +9,5 @@ public interface LabelDAO {
     List<Label> viewLabels() throws SQLException;
     boolean addLabel(String name) throws SQLException;
     boolean deleteLabel(int labelId) throws SQLException;
+    Label findOneLabel(int labelId) throws SQLException;
 }
