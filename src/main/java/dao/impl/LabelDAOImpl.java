@@ -21,7 +21,7 @@ public class LabelDAOImpl implements LabelDAO {
 
     @Override
     public List<Label> viewLabels() throws SQLException {
-        List<Label> labels = new ArrayList<Label>();
+        List<Label> labels = new ArrayList<>();
         String sql = "select * from label";
         this.pstmt = this.conn.prepareStatement(sql);
         ResultSet rs = this.pstmt.executeQuery();
@@ -55,7 +55,7 @@ public class LabelDAOImpl implements LabelDAO {
     @Override
     public boolean deleteLabel(int labelId) throws SQLException {
         boolean flag = false;
-        String sql = "delete from label where i_id = " + labelId;
+        String sql = "delete from label where l_id = " + labelId;
         this.pstmt = this.conn.prepareStatement(sql);
         if (this.pstmt.executeUpdate(sql) > 0) {
             flag = true;
