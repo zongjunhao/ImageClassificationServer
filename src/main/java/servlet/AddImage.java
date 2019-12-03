@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import vo.Label;
 
 import javax.servlet.ServletException;
@@ -67,13 +68,18 @@ public class AddImage extends HttpServlet {
         imageName = imageName.substring(imageName.lastIndexOf("\\") + 1);// 从全路径中提取文件名
         String imagePath = "upload/" + labelName + "/" + imageName;
         String path = uploadPath + "/" + imagePath;
+        String projectPath = "E:\\IdeaProjects\\ImageClassificationServer\\src\\main\\resources\\";
+        String imageInProjectPath = uploadPath + "../../src/main/resources/" + imagePath;
         System.out.println(path);
+        System.out.println(imageInProjectPath);
 
         // 保存图片并存入数据库
         File imageFile = new File(path);
+        File imageInProject = new File(imageInProjectPath);
         try {
             fileItem.write(imageFile);
             DAOFactory.getImageDAOInstance().addImage(labelId, imageName, imagePath);
+            FileUtils.copyFile(imageFile, imageInProject);
         } catch (Exception e) {
             e.printStackTrace();
         }

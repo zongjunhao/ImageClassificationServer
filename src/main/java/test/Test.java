@@ -19,6 +19,13 @@ public class Test {
 //        System.out.println(flag);
 //        boolean flag = DAOFactory.getImageDAOInstance().deleteImage(4);
 //        System.out.println(flag);
-        DAOFactory.getLabelDAOInstance().viewLabels();
+//        DAOFactory.getLabelDAOInstance().viewLabels();
+        int picNum = 5;
+        int labelId = 25;
+        String labelName = "zara_6096_451";
+        for (int i = 0; i < picNum; i++) {
+            String picName = labelName + "_" + (i + 1) + ".jpg";
+            DAOFactory.getImageDAOInstance().addImage(labelId, picName, "upload/" + labelName + "/" + picName);
+        }
     }
 }
