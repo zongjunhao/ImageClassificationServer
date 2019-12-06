@@ -4,6 +4,7 @@ import dao.ImageDAO;
 import dao.impl.ImageDAOImpl;
 import dbc.DatabaseConnection;
 import vo.Image;
+import vo.Label;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -55,5 +56,18 @@ public class ImageDAOProxy implements ImageDAO {
             this.dbc.close();
         }
         return flag;
+    }
+
+    @Override
+    public Image findOneImage(int imageId) throws SQLException {
+        Image image = null;
+        try {
+            image = this.dao.findOneImage(imageId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.dbc.close();
+        }
+        return image;
     }
 }

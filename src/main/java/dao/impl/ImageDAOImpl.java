@@ -67,4 +67,24 @@ public class ImageDAOImpl implements ImageDAO {
         this.pstmt.close();
         return flag;
     }
+
+    @Override
+    public Image findOneImage(int imageId) throws SQLException {
+        Image image = null;
+        String sql = "select * from image where i_id = " + imageId;
+        this.pstmt = this.conn.prepareStatement(sql);
+        ResultSet rs = this.pstmt.executeQuery();
+        if (rs.next()) {
+            image = new Image();
+            image.setId(rs.getInt(1));
+            image.setLabelId(rs.getInt(2));
+            image.setName(rs.getString(3));
+            image.setPath(rs.getString(4));
+            image.setAddtime(rs.getTimestamp(5));
+            image.setUpdatetime(rs.getTimestamp(6));
+        }
+        this.pstmt.close();
+        return image;
+    }
+
 }

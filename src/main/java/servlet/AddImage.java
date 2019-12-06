@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "AddImage", urlPatterns = "/image/addImage")
@@ -31,6 +33,7 @@ public class AddImage extends HttpServlet {
         FileItem fileItem = null; // 得到FileItem的集合Items
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         upload.setHeaderEncoding(encoding);
 
         // 获取每一个输入项，包括文件和普通输入项
@@ -62,29 +65,44 @@ public class AddImage extends HttpServlet {
         }
 
         // 拼接形成图片路径
-        String uploadPath = request.getServletContext().getRealPath("/");
+        String uploadPath = request.getServletContext().getRealPath("/");// 获取所在目录路径
         String labelName = label.getName();
         String imageName = fileItem.getName();// 获取的文件名可能包含路径信息
         imageName = imageName.substring(imageName.lastIndexOf("\\") + 1);// 从全路径中提取文件名
         String imagePath = "upload/" + labelName + "/" + imageName;
         String path = uploadPath + "/" + imagePath;
-        String projectPath = "E:\\IdeaProjects\\ImageClassificationServer\\src\\main\\resources\\";
-        String imageInProjectPath = uploadPath + "../../src/main/resources/" + imagePath;
+//        String projectPath = "E:\\IdeaProjects\\ImageClassificationServer\\src\\main\\resources\\";
+
+        // 在文件名中添加时间，防止文件名重复
+        int index = imageName.lastIndexOf(".");
+        String newImageName = imageName.substring(0, index) + sdf.format(new Date()) + imageName.substring(index);
+        String newImagePath = "upload/" + labelName + "/" + newImageName;
+        String newPath = uploadPath + "/" + newImagePath;
+        String imageInProjectPath = uploadPath + "../../src/main/resources/" + newImagePath;
+
         System.out.println(path);
+        System.out.println(newPath);
         System.out.println(imageInProjectPath);
 
         // 保存图片并存入数据库
-        File imageFile = new File(path);
+        File imageFile = new File(newPath);
         File imageInProject = new File(imageInProjectPath);
+        boolean success = false;
         try {
             fileItem.write(imageFile);
-            DAOFactory.getImageDAOInstance().addImage(labelId, imageName, imagePath);
+            success = DAOFactory.getImageDAOInstance().addImage(labelId, imageName, newImagePath);
             FileUtils.copyFile(imageFile, imageInProject);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("ending````````````````````````````");
+        PrintWriter out = response.getWriter();
+        if (success) {
+            out.write("success");
+        } else {
+            out.write("fail");
+        }
+        System.out.println("add image end");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
