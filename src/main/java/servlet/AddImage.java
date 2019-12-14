@@ -78,7 +78,7 @@ public class AddImage extends HttpServlet {
         String newImageName = imageName.substring(0, index) + sdf.format(new Date()) + imageName.substring(index);
         String newImagePath = "upload/" + labelName + "/" + newImageName;
         String newPath = uploadPath + "/" + newImagePath;
-        String imageInProjectPath = uploadPath + "../../src/main/resources/" + newImagePath;
+        String imageInProjectPath = uploadPath + "../../src/main/webapp/" + newImagePath;
 
         System.out.println(path);
         System.out.println(newPath);
